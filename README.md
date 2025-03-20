@@ -15,13 +15,13 @@ GRANT ALL PRIVILEGES ON api.* TO 'api'@'%.%.%.%';
 
 ## 3. Thành Viên & Phân Công Công Việc
 
-| Câu hỏi | MSSV | Họ và Tên | Công việc |
-|---------|------|-----------|-----------|
-| Câu 1 | 22110405 | Lê Đào Nhân Sâm | |
-| Câu 2 | 22110295 | Đặng Đăng Duy | |
-| Câu 3 | 22110307 | Nguyễn Duy Đạt | |
-| Câu 4 | Cả Nhóm | | |
-| Câu 5 | 22110450 | Võ Văn Tuấn | |
-| Câu 6 | 21110912 | Nguyễn Hữu Phong | |
-| Câu 7 | 22110383 | Dương Khánh Nguyên | API Đăng ký, Đăng nhập |
-| Câu 7 | 22110383 | Nguyễn Nhật Nguyên | API Full Category, Last Product |
+| MSSV | Họ và Tên | Công việc |
+|------|-----------|-----------|
+| 22110405 | Lê Đào Nhân Sâm | Câu 1 |
+| 22110295 | Đặng Đăng Duy | Câu 2 |
+| 22110307 | Nguyễn Duy Đạt | Câu 3 |
+| Cả Nhóm | | Câu 4 |
+| 22110450 | Võ Văn Tuấn | Câu hỏi 5 |
+| 21110912 | Nguyễn Hữu Phong | Câu hỏi 6 |
+| 22110383 | Dương Khánh Nguyên | API Đăng ký, Đăng nhập |
+| 22110383 | Nguyễn Nhật Nguyên | API Full Category, Last Product |
