@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.autobackgroundchanger.network.ApiService;
 import com.example.autobackgroundchanger.network.RetrofitClient;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,17 +55,18 @@ public class RegisterActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(RegisterActivity.this, "OTP sent successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RegisterActivity.this, com.example.autobackgroundchanger.OtpVerificationActivity.class);
+                    Intent intent = new Intent(RegisterActivity.this, OtpVerificationActivity.class);
                     intent.putExtra("email", email);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(RegisterActivity.this, "Failed to send OTP", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Failed to send OTP: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(RegisterActivity.this, "Network error! Try again.", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
             }
         });
     }
