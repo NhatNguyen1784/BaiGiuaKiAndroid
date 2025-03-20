@@ -1,10 +1,10 @@
-package vn.hcmute.controllers;
+package vn.hcmute.testAPI.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import vn.hcmute.entity.User;
-import vn.hcmute.repository.UserRepository;
-import vn.hcmute.services.AuthService;
+import vn.hcmute.testAPI.entity.User;
+import vn.hcmute.testAPI.repository.UserRepository;
+import vn.hcmute.testAPI.service.impl.AuthService;
 
 import java.util.List;
 
