@@ -230,8 +230,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:background="@android:color/transparent"
-                app:itemIconTint="@color/bottom_nav_icons"
-                app:itemTextColor="@color/bottom_nav_icons"
                 app:labelVisibilityMode="labeled"
                 app:menu="@menu/bottom_bar" />
         </com.google.android.material.bottomappbar.BottomAppBar>
