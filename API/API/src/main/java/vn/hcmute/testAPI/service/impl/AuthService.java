@@ -45,7 +45,7 @@ public class AuthService {
 
     public String Login(String username, String password){
         if(userRepository.findByEmailAndPassword(username, password).isPresent()){
-            return "Login success";
+            return username;
         }
         return "Invalid username or password";
     }

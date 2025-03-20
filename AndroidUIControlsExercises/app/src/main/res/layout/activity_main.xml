@@ -235,36 +235,41 @@
         android:layout_height="100dp"
         app:layout_constraintBottom_toBottomOf="@+id/scroll"
         app:layout_constraintEnd_toEndOf="parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:layout_gravity="bottom"
             android:backgroundTint="#f6f6f6"
             app:fabCradleMargin="8dp"
             app:fabCradleRoundedCornerRadius="50dp"
-            app:fabCradleVerticalOffset="6dp">
+            app:fabCradleVerticalOffset="6dp"
+            app:fabAlignmentMode="center"
+            app:hideOnScroll="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center">
 
                 <LinearLayout
                     android:id="@+id/homeBtn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.2"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:orientation="vertical">
-
                     <ImageView
                         android:id="@+id/imageView5"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/ic_home" />
+                        android:layout_width="70dp"
+                        android:layout_height="30dp"
+                        app:srcCompat="@drawable/ic_home"
+                        app:tint="#FF0000" />
 
                     <TextView
                         android:id="@+id/textView11"
@@ -279,15 +284,16 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.2"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/imageView5115"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/btn4" />
+                        android:layout_height="30dp"
+                        app:srcCompat="@drawable/btn4"
+                        app:tint="#FF0000"/>
 
                     <TextView
                         android:id="@+id/textView11125"
@@ -299,33 +305,25 @@
                         android:textSize="12sp" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
 
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/btnCart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:backgroundTint="#ff5e00"
-                    android:contentDescription="CART"
-                    android:elevation="6dp"
-                    android:src="@drawable/shopping_cart"
-                    app:layout_anchorGravity="center"
-                    app:maxImageSize="30dp"
-                    app:tint="@color/white" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.2"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/imageView511"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/btn3" />
+                        android:layout_width="70dp"
+                        android:layout_height="30dp"
+                        app:srcCompat="@drawable/btn3"
+                        app:tint="#FF0000"/>
 
                     <TextView
                         android:id="@+id/textView111"
@@ -340,15 +338,16 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.2"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/imageView5112"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/logout" />
+                        android:layout_width="70dp"
+                        android:layout_height="30dp"
+                        app:srcCompat="@drawable/logout"
+                        app:tint="#FF0000"/>
 
                     <TextView
                         android:id="@+id/textView1112"
@@ -361,6 +360,17 @@
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.bottomappbar.BottomAppBar>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/cartBtn"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="30dp"
+            android:backgroundTint="#FF5E00"
+            android:src="@drawable/shopping_cart"
+            app:tint="@color/white"
+            app:maxImageSize="24dp"
+            app:elevation="8dp" />
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
