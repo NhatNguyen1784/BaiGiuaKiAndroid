@@ -1,5 +1,6 @@
 package com.example.autobackgroundchanger;
 
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     APIService apiService;
     List<Category> categoryList;
 
+    TextView info;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +49,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         AnhXa();
         GetCategory();
+        Getthongtin();
     }
+    private void Getthongtin() {
+        info = findViewById(R.id.infoUser); // Ánh xạ TextView từ layout
+
+        // Lấy dữ liệu từ SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE);
+        String username = sharedPreferences.getString("username", "Chưa có thông tin đăng nhập");
+
+        // Hiển thị username lên TextView
+        info.setText("Hi! " + username);
+    }
+
 
     private void AnhXa(){
         rvCate = (RecyclerView) findViewById(R.id.rvCategories);
