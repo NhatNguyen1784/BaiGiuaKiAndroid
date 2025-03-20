@@ -3,6 +3,7 @@ package com.example.autobackgroundchanger.api;
 import com.example.autobackgroundchanger.model.Category;
 import com.example.autobackgroundchanger.model.LoginRequest;
 import com.example.autobackgroundchanger.model.Product;
+import com.example.autobackgroundchanger.model.UserModel;
 
 import java.util.List;
 import java.util.Map;
@@ -25,9 +26,9 @@ public interface ApiService {
     Call<List<Product>> getLastProducts();
 
     @POST("sendcode")
-    Call<ResponseBody> sendOtp(@Query("email") String email);  // Dùng @Query thay vì @Body
+    Call<String> sendOtp(@Query("email") String email);
 
     @POST("register")
-    Call<ResponseBody> registerUser(@Body Map<String, String> body);
+    Call<ResponseBody> registerUser(@Body UserModel userModel, @Query("otp") String otp);
 }
 

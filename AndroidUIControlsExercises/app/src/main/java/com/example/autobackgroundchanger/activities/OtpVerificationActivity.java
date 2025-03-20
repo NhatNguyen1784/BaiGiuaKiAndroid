@@ -1,4 +1,4 @@
-package com.example.autobackgroundchanger;
+package com.example.autobackgroundchanger.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.autobackgroundchanger.R;
 import com.example.autobackgroundchanger.api.ApiService;
 import com.example.autobackgroundchanger.api.RetrofitClient;
 
@@ -62,9 +63,9 @@ public class OtpVerificationActivity extends AppCompatActivity {
         }
 
         // Gửi OTP và mật khẩu để đăng ký
-        registerUser(email, password, otp);
+        //registerUser(email, password, otp);
     }
-
+/*
     private void registerUser(String email, String password, String otp) {
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("email", email);
@@ -89,4 +90,6 @@ public class OtpVerificationActivity extends AppCompatActivity {
             }
         });
     }
+
+ */
 }

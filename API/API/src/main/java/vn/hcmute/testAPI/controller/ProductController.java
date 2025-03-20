@@ -37,7 +37,7 @@ public class ProductController {
     public ResponseEntity<?> addCategory(@Validated @RequestParam("productName") String name,
                                          @Validated @RequestParam("description") String description,
                                          @Validated @RequestParam("price") double price,
-                                             @Validated @RequestParam("image") MultipartFile icon,
+                                         @Validated @RequestParam("image") MultipartFile icon,
                                          @Validated @RequestParam("categoryId") Long categoryId){
         Optional<Product> optionalProduct = productService.findByProductName(name);
         if(optionalProduct.isPresent()){

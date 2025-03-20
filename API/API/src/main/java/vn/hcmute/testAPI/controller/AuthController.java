@@ -1,7 +1,10 @@
 package vn.hcmute.testAPI.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.hcmute.testAPI.dto.UserDTO;
 import vn.hcmute.testAPI.entity.User;
 import vn.hcmute.testAPI.repository.UserRepository;
 import vn.hcmute.testAPI.service.impl.AuthService;
@@ -9,7 +12,7 @@ import vn.hcmute.testAPI.service.impl.AuthService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api")
 public class AuthController {
     @Autowired
     private AuthService authService;
@@ -17,42 +20,51 @@ public class AuthController {
     private UserRepository userRepository;
 
 
-    @PostMapping("login")
-    public String Login(@RequestBody User user) {
+    @PostMapping("/login")
+    public String Login(@RequestBody UserDTO user) {
         return authService.Login(user.getEmail(), user.getPassword());
     }
 
-    @GetMapping("users")
+    @GetMapping("/users")
     public List<User> Users(){
         List<User> u = authService.users();
         System.out.println(u.size());
         return u;
     }
 
-    @PostMapping("sendcode")
+    @PostMapping("/sendcode")
     public String SendOtp(@RequestParam String email) {
         return authService.SendOtp(email);
     }
 
-    @PostMapping("register")
-    public String Register(@RequestBody User newUser, @RequestParam String otp) {
-        // Kiểm tra OTP người dùng nhập vào
-        if (!authService.VerifyOtp(newUser.getEmail(), otp)) {
-            return "Invalid OTP";  // Trả về thông báo nếu OTP không chính xác
+
+    @PostMapping("/register")
+    public ResponseEntity<?> Register(@RequestBody UserDTO newUserDTO, @RequestParam String otp) {
+        // Kiểm tra OTP
+        if (!authService.VerifyOtp(newUserDTO.getEmail(), otp)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid OTP"); // Trả về mã lỗi 400
         }
 
         // Kiểm tra xem email đã tồn tại chưa
-        if (userRepository.findByEmail(newUser.getEmail()).isPresent()) {
-            return "Email already exists";  // Nếu email đã tồn tại
+        if (userRepository.findByEmail(newUserDTO.getEmail()).isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exists"); // Trả về mã lỗi 409
         }
 
-        // Lưu người dùng mới vào cơ sở dữ liệu
+        // Chuyển UserDTO thành User
+        User newUser = new User();
+        newUser.setEmail(newUserDTO.getEmail());
+        newUser.setPassword(newUserDTO.getPassword()); // Cần mã hóa mật khẩu trước khi lưu vào DB!
+
+        // Lưu người dùng mới vào database
         userRepository.save(newUser);
-        authService.otpCache.remove(newUser.getEmail());
-        return "User registered successfully";  // Trả về thông báo đăng ký thành công
+        authService.otpCache.remove(newUserDTO.getEmail());
+
+        return ResponseEntity.ok("User registered successfully");
     }
 
-    @PostMapping("forgotPassword")
+
+
+    @PostMapping("/forgotPassword")
     public String ForgotPassword(@RequestParam String email, @RequestParam String pass, @RequestParam String otp) {
         if(!userRepository.findByEmail(email).isPresent()) {
             return "Email not found";

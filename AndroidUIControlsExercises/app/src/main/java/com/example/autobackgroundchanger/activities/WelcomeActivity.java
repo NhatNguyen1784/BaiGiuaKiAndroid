@@ -1,4 +1,4 @@
-package com.example.autobackgroundchanger;
+package com.example.autobackgroundchanger.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +8,8 @@ import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.autobackgroundchanger.R;
 
 public class WelcomeActivity extends AppCompatActivity {
     @Override

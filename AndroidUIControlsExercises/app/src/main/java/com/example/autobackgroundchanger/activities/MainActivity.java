@@ -1,14 +1,11 @@
-package com.example.autobackgroundchanger;
+package com.example.autobackgroundchanger.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -16,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.autobackgroundchanger.R;
 import com.example.autobackgroundchanger.adapter.CategoryAdapter;
 
 import com.example.autobackgroundchanger.adapter.ProductAdapter;

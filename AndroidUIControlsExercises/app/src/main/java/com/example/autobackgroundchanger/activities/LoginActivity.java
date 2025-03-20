@@ -1,4 +1,4 @@
-package com.example.autobackgroundchanger;
+package com.example.autobackgroundchanger.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.autobackgroundchanger.R;
 import com.example.autobackgroundchanger.api.ApiService;
 import com.example.autobackgroundchanger.api.RetrofitClient;
 import com.example.autobackgroundchanger.model.LoginRequest;
