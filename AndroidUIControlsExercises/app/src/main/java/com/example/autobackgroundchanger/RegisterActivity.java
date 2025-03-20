@@ -9,11 +9,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.autobackgroundchanger.network.ApiService;
-import com.example.autobackgroundchanger.network.RetrofitClient;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.example.autobackgroundchanger.api.ApiService;
+import com.example.autobackgroundchanger.api.RetrofitClient;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -33,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmail);
         btnSendOtp = findViewById(R.id.btnSendOtp);
 
-        apiService = RetrofitClient.getApiService();
+        apiService = RetrofitClient.getRetrofit().create(ApiService.class);
 
         btnSendOtp.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -9,7 +9,7 @@ import vn.hcmute.testAPI.service.impl.AuthService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/")
 public class AuthController {
     @Autowired
     private AuthService authService;
@@ -17,24 +17,24 @@ public class AuthController {
     private UserRepository userRepository;
 
 
-    @PostMapping("/login")
+    @PostMapping("login")
     public String Login(@RequestBody User user) {
         return authService.Login(user.getEmail(), user.getPassword());
     }
 
-    @GetMapping("/users")
+    @GetMapping("users")
     public List<User> Users(){
         List<User> u = authService.users();
         System.out.println(u.size());
         return u;
     }
 
-    @PostMapping("/sendcode")
+    @PostMapping("sendcode")
     public String SendOtp(@RequestParam String email) {
         return authService.SendOtp(email);
     }
 
-    @PostMapping("/register")
+    @PostMapping("register")
     public String Register(@RequestBody User newUser, @RequestParam String otp) {
         // Kiểm tra OTP người dùng nhập vào
         if (!authService.VerifyOtp(newUser.getEmail(), otp)) {
@@ -52,7 +52,7 @@ public class AuthController {
         return "User registered successfully";  // Trả về thông báo đăng ký thành công
     }
 
-    @PostMapping("/forgotPassword")
+    @PostMapping("forgotPassword")
     public String ForgotPassword(@RequestParam String email, @RequestParam String pass, @RequestParam String otp) {
         if(!userRepository.findByEmail(email).isPresent()) {
             return "Email not found";

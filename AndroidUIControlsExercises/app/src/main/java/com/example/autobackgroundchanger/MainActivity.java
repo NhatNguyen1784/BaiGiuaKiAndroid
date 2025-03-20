@@ -2,8 +2,6 @@ package com.example.autobackgroundchanger;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,24 +10,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.autobackgroundchanger.adapter.CategoryAdapter;
-import com.example.autobackgroundchanger.model.APIService;
+
+import com.example.autobackgroundchanger.adapter.ProductAdapter;
+import com.example.autobackgroundchanger.api.ApiService;
+import com.example.autobackgroundchanger.api.RetrofitClient;
 import com.example.autobackgroundchanger.model.Category;
-import com.example.autobackgroundchanger.model.RetrofitClient;
+
+import com.example.autobackgroundchanger.model.Product;
 
 import java.util.List;
-import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,10 +34,13 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView rvCate;
+    RecyclerView rvLastProducts;
     //Khai bao adapter
     CategoryAdapter categoryAdapter;
-    APIService apiService;
+    ProductAdapter productAdapter;
+    ApiService apiService;
     List<Category> categoryList;
+    List<Product> productList;
 
     TextView info;
     ImageView logoutLayout;
@@ -53,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         AnhXa();
         GetCategory();
+		GetLastProducts();
         Getthongtin();
         logoutLayout = findViewById(R.id.imageView5112);
         logout();
@@ -88,13 +88,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void AnhXa(){
-        rvCate = (RecyclerView) findViewById(R.id.rvCategories);
-
+        rvCate = findViewById(R.id.rvCategories);
+        rvLastProducts = findViewById(R.id.rvLastProducts);
     }
 
     private void GetCategory(){
         // Goi interface trong API Service
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        
+        apiService = RetrofitClient.getRetrofit().create(ApiService.class);
         apiService.getCategoryAll().enqueue(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
@@ -117,6 +118,35 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
                 Log.d("Log", t.getMessage());
+            }
+        });
+    }
+
+    private void GetLastProducts(){
+        // Goi interface trong API Service
+        apiService = RetrofitClient.getRetrofit().create(ApiService.class);
+        apiService.getLastProducts().enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if(response.isSuccessful()){
+                    productList = response.body();
+                    productAdapter = new ProductAdapter(MainActivity.this, productList);
+                    rvLastProducts.setHasFixedSize(true);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),
+                            LinearLayoutManager.HORIZONTAL, false);
+                    rvLastProducts.setLayoutManager(layoutManager);
+                    rvLastProducts.setAdapter(productAdapter);
+                    productAdapter.notifyDataSetChanged();
+                } else {
+                    int statusCode = response.code();
+                    Log.d("Logg Lỗi product", statusCode + "");
+                    // Xử lý lỗi
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                Log.d("Logssss", t.getMessage());
             }
         });
     }

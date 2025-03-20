@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.autobackgroundchanger.network.ApiService;
-import com.example.autobackgroundchanger.network.RetrofitClient;
+import com.example.autobackgroundchanger.api.ApiService;
+import com.example.autobackgroundchanger.api.RetrofitClient;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +23,7 @@ import retrofit2.Response;
 public class OtpVerificationActivity extends AppCompatActivity {
     private EditText etOtp, etPassword;
     private ImageButton btnVerifyOtp;
+
     private ApiService apiService;
     private String email;
 
@@ -35,7 +36,7 @@ public class OtpVerificationActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         btnVerifyOtp = findViewById(R.id.btnVerifyOtp);
 
-        apiService = RetrofitClient.getApiService();
+        apiService = RetrofitClient.getRetrofit().create(ApiService.class);
         email = getIntent().getStringExtra("email"); // Nhận email từ intent trước đó
 
         btnVerifyOtp.setOnClickListener(new View.OnClickListener() {

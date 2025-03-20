@@ -16,9 +16,6 @@ import com.example.autobackgroundchanger.api.ApiService;
 import com.example.autobackgroundchanger.api.RetrofitClient;
 import com.example.autobackgroundchanger.model.LoginRequest;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.imageButton);
 
         // Khởi tạo ApiService từ RetrofitClient
-        apiService = RetrofitClient.getClient().create(ApiService.class);
+        apiService = RetrofitClient.getRetrofit().create(ApiService.class);
 
         loginButton.setOnClickListener(view -> loginUser());
     }

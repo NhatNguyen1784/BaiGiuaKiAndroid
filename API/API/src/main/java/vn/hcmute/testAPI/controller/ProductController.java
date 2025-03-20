@@ -29,8 +29,8 @@ public class ProductController {
     private ICategoryService categoryService;
 
     @GetMapping(produces = "application/json")
-    public ResponseEntity<?> getLastestProduct(@Validated @RequestParam("limit") int limit) {
-        return ResponseEntity.ok(productService.getLastestProducts(limit));
+    public ResponseEntity<?> getLastestProduct() {
+        return ResponseEntity.ok(productService.getLastestProducts(10));
     }
 
     @PostMapping(path = "/addProduct", produces = "application/json")

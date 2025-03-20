@@ -32,4 +32,4 @@ spring:
   mandatory-file-encoding: UTF-8
 
 storage:
-  location: D:/workspace/Java/android/testAPI/uploads
+  location: D:/uploads
