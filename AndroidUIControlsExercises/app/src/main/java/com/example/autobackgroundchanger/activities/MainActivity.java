@@ -24,6 +24,7 @@ import com.example.autobackgroundchanger.model.Category;
 import com.example.autobackgroundchanger.model.Product;
 
 import java.util.List;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     List<Product> productList;
 
     TextView info;
-    ImageView logoutLayout;
+    ImageView logoutLayout, avatarImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,17 @@ public class MainActivity extends AppCompatActivity {
 		GetLastProducts();
         Getthongtin();
         logoutLayout = findViewById(R.id.imageView5112);
+        avatarImg = (ImageView) findViewById(R.id.imageView3);
+        // Mảng chứa ID của các ảnh trong drawable
+        int[] images = {R.drawable.im1, R.drawable.im2, R.drawable.im3, R.drawable.im4};
+
+        // Random một ảnh
+        Random random = new Random();
+        int randomIndex = random.nextInt(images.length);
+        int randomImage = images[randomIndex];
+
+        // Đặt ảnh random vào ImageView
+        avatarImg.setImageResource(randomImage);
         logout();
     }
     private void logout ()
