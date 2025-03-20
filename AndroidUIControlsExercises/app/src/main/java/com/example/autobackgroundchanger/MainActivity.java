@@ -18,9 +18,12 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.autobackgroundchanger.adapter.CategoryAdapter;
+import com.example.autobackgroundchanger.adapter.ProductAdapter;
 import com.example.autobackgroundchanger.model.APIService;
 import com.example.autobackgroundchanger.model.Category;
+import com.example.autobackgroundchanger.model.Product;
 import com.example.autobackgroundchanger.model.RetrofitClient;
 
 import java.util.List;
@@ -33,10 +36,13 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView rvCate;
+    RecyclerView rvLastProducts;
     //Khai bao adapter
     CategoryAdapter categoryAdapter;
+    ProductAdapter productAdapter;
     APIService apiService;
     List<Category> categoryList;
+    List<Product> productList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +51,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         AnhXa();
         GetCategory();
-
-
+        GetLastProducts();
     }
 
     private void AnhXa(){
-        rvCate = (RecyclerView) findViewById(R.id.rvCategories);
-
+        rvCate = findViewById(R.id.rvCategories);
+        rvLastProducts = findViewById(R.id.rvLastProducts);
     }
 
     private void GetCategory(){
@@ -78,6 +83,32 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
+                Log.d("Log", t.getMessage());
+            }
+        });
+    }
+
+    private void GetLastProducts(){
+        apiService.getLastProducts().enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if(response.isSuccessful()){
+                    productList = response.body();
+                    productAdapter = new ProductAdapter(MainActivity.this, productList);
+                    rvLastProducts.setHasFixedSize(true);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),
+                            LinearLayoutManager.HORIZONTAL, false);
+                    rvLastProducts.setLayoutManager(layoutManager);
+                    rvLastProducts.setAdapter(productAdapter);
+                    productAdapter.notifyDataSetChanged();
+                } else {
+                    int statusCode = response.code();
+                    // Xử lý lỗi
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
                 Log.d("Log", t.getMessage());
             }
         });

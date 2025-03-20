@@ -8,4 +8,7 @@ import retrofit2.http.GET;
 public interface APIService {
     @GET("categry/getCategory")
     Call<List<Category>> getCategoryAll();
+    
+    @GET("product")
+    Call<List<Product>> getLastProducts();
 }

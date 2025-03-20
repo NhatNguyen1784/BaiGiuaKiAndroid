@@ -1,40 +1,53 @@
 package com.example.autobackgroundchanger.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Product {
-    private Long productId;
-    private String productName;
-    private String description;
+    @SerializedName("productId")
+    private int id;
+    
+    @SerializedName("productName")
+    private String name;
+    
+    @SerializedName("image")
+    private String image;
+    
+    @SerializedName("price")
     private double price;
+    
+    @SerializedName("description")
+    private String description;
 
-    public Product(Long productId, String productName, String description, double price) {
-        this.productId = productId;
-        this.productName = productName;
-        this.description = description;
+    public Product(int id, String name, String image, double price, String description) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
         this.price = price;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public double getPrice() {
@@ -43,5 +56,13 @@ public class Product {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
