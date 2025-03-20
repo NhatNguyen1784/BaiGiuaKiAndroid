@@ -1,3 +1,4 @@
+# Branch mới nhất là main
 # Hướng Dẫn Cấu Hình
 
 ## 1. Cấu Hình Database
