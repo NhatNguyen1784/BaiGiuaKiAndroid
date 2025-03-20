@@ -3,7 +3,6 @@ package com.example.autobackgroundchanger;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -37,7 +36,7 @@ public class OtpVerificationActivity extends AppCompatActivity {
         btnVerifyOtp = findViewById(R.id.btnVerifyOtp);
 
         apiService = RetrofitClient.getApiService();
-        email = getIntent().getStringExtra("email");
+        email = getIntent().getStringExtra("email"); // Nhận email từ intent trước đó
 
         btnVerifyOtp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,31 +50,41 @@ public class OtpVerificationActivity extends AppCompatActivity {
         String otp = etOtp.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
-        if (otp.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Please enter OTP and Password", Toast.LENGTH_SHORT).show();
+        if (otp.isEmpty()) {
+            Toast.makeText(this, "Please enter OTP", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        if (password.isEmpty() || password.length() < 6) {
+            Toast.makeText(this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Gửi OTP và mật khẩu để đăng ký
+        registerUser(email, password, otp);
+    }
+
+    private void registerUser(String email, String password, String otp) {
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("email", email);
-        requestBody.put("otp", otp);
         requestBody.put("password", password);
+        requestBody.put("otp", otp); // Truyền OTP vào API đăng ký
 
         apiService.registerUser(requestBody).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(OtpVerificationActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OtpVerificationActivity.this, "Registration Successful!", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(OtpVerificationActivity.this, LoginActivity.class));
                     finish();
                 } else {
-                    Toast.makeText(OtpVerificationActivity.this, "Invalid OTP. Please try again.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OtpVerificationActivity.this, "Invalid OTP or Registration Failed!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(OtpVerificationActivity.this, "Network error! Try again.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OtpVerificationActivity.this, "Network error! Please try again.", Toast.LENGTH_SHORT).show();
             }
         });
     }

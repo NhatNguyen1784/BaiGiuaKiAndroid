@@ -11,12 +11,6 @@
         android:hint="Enter Email"
         android:inputType="textEmailAddress" />
 
-    <EditText
-        android:id="@+id/etPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Password"
-        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/btnSendOtp"

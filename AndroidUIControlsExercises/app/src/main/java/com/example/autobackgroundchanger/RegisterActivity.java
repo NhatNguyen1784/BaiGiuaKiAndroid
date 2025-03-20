@@ -28,7 +28,6 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         etEmail = findViewById(R.id.etEmail);
-        etPassword = findViewById(R.id.etPassword);
         btnSendOtp = findViewById(R.id.btnSendOtp);
 
         apiService = RetrofitClient.getApiService();
