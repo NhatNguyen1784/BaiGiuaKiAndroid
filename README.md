@@ -25,6 +25,12 @@ Mở file `application.yaml` và cấu hình như sau:
   username: nd2004lk13@gmail.com
   password: kzvm xlcs hcsn nedy
   ```
+- Đổi location của storage thành đường dẫn trên máy local mà mình muốn lưu:
+  ```yaml
+  storage:
+    location: D:/workspace/Java/android/testAPI/uploads
+  ```
+
 
 ## 4. Thành Viên & Phân Công Công Việc
 
