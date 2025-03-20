@@ -30,7 +30,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_product, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product, null);
         return new ProductViewHolder(view);
     }
 
@@ -43,10 +43,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         // Sử dụng Glide để load ảnh
         Glide.with(context)
                 .load(product.getImage())
-                .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_launcher_background)
+//                .placeholder(R.drawable.ic_launcher_background)
+//                .error(R.drawable.ic_launcher_background)
                 .centerCrop()
                 .into(holder.imgProduct);
+
+        //Glide.with(context).load(product.getImage()).into(holder.imgProduct);
     }
 
     @Override

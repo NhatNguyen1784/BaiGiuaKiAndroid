@@ -1,33 +1,23 @@
 package com.example.autobackgroundchanger;
 
-import android.content.res.ColorStateList;
-import android.graphics.Color;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.CompoundButton;
-import android.widget.LinearLayout;
-import android.widget.Switch;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.autobackgroundchanger.adapter.CategoryAdapter;
 import com.example.autobackgroundchanger.adapter.ProductAdapter;
-import com.example.autobackgroundchanger.model.APIService;
+import com.example.autobackgroundchanger.api.ApiService;
+import com.example.autobackgroundchanger.api.RetrofitClient;
 import com.example.autobackgroundchanger.model.Category;
 import com.example.autobackgroundchanger.model.Product;
-import com.example.autobackgroundchanger.model.RetrofitClient;
 
 import java.util.List;
-import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,9 +30,11 @@ public class MainActivity extends AppCompatActivity {
     //Khai bao adapter
     CategoryAdapter categoryAdapter;
     ProductAdapter productAdapter;
-    APIService apiService;
+    ApiService apiService;
     List<Category> categoryList;
     List<Product> productList;
+
+    TextView info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +43,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         AnhXa();
         GetCategory();
-        GetLastProducts();
+		GetLastProducts();
+        Getthongtin();
     }
+    private void Getthongtin() {
+        info = findViewById(R.id.infoUser); // Ánh xạ TextView từ layout
+
+        // Lấy dữ liệu từ SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE);
+        String username = sharedPreferences.getString("username", "Chưa có thông tin đăng nhập");
+
+        // Hiển thị username lên TextView
+        info.setText("Hi! " + username);
+    }
+
 
     private void AnhXa(){
         rvCate = findViewById(R.id.rvCategories);
@@ -61,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void GetCategory(){
         // Goi interface trong API Service
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService = RetrofitClient.getRetrofit().create(ApiService.class);
         apiService.getCategoryAll().enqueue(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
@@ -89,6 +93,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void GetLastProducts(){
+        // Goi interface trong API Service
+        apiService = RetrofitClient.getRetrofit().create(ApiService.class);
         apiService.getLastProducts().enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
@@ -103,13 +109,14 @@ public class MainActivity extends AppCompatActivity {
                     productAdapter.notifyDataSetChanged();
                 } else {
                     int statusCode = response.code();
+                    Log.d("Logg Lỗi product", statusCode + "");
                     // Xử lý lỗi
                 }
             }
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
-                Log.d("Log", t.getMessage());
+                Log.d("Logssss", t.getMessage());
             }
         });
     }
