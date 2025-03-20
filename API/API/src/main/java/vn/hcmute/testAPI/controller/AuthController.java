@@ -1,7 +1,10 @@
 package vn.hcmute.testAPI.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.hcmute.testAPI.dto.UserDTO;
 import vn.hcmute.testAPI.entity.User;
 import vn.hcmute.testAPI.repository.UserRepository;
 import vn.hcmute.testAPI.service.impl.AuthService;
@@ -18,7 +21,7 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public String Login(@RequestBody User user) {
+    public String Login(@RequestBody UserDTO user) {
         return authService.Login(user.getEmail(), user.getPassword());
     }
 
@@ -34,23 +37,32 @@ public class AuthController {
         return authService.SendOtp(email);
     }
 
+
     @PostMapping("/register")
-    public String Register(@RequestBody User newUser, @RequestParam String otp) {
-        // Kiểm tra OTP người dùng nhập vào
-        if (!authService.VerifyOtp(newUser.getEmail(), otp)) {
-            return "Invalid OTP";  // Trả về thông báo nếu OTP không chính xác
+    public ResponseEntity<?> Register(@RequestBody UserDTO newUserDTO, @RequestParam String otp) {
+        // Kiểm tra OTP
+        if (!authService.VerifyOtp(newUserDTO.getEmail(), otp)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid OTP"); // Trả về mã lỗi 400
         }
 
         // Kiểm tra xem email đã tồn tại chưa
-        if (userRepository.findByEmail(newUser.getEmail()).isPresent()) {
-            return "Email already exists";  // Nếu email đã tồn tại
+        if (userRepository.findByEmail(newUserDTO.getEmail()).isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exists"); // Trả về mã lỗi 409
         }
 
-        // Lưu người dùng mới vào cơ sở dữ liệu
+        // Chuyển UserDTO thành User
+        User newUser = new User();
+        newUser.setEmail(newUserDTO.getEmail());
+        newUser.setPassword(newUserDTO.getPassword()); // Cần mã hóa mật khẩu trước khi lưu vào DB!
+
+        // Lưu người dùng mới vào database
         userRepository.save(newUser);
-        authService.otpCache.remove(newUser.getEmail());
-        return "User registered successfully";  // Trả về thông báo đăng ký thành công
+        authService.otpCache.remove(newUserDTO.getEmail());
+
+        return ResponseEntity.ok("User registered successfully");
     }
+
+
 
     @PostMapping("/forgotPassword")
     public String ForgotPassword(@RequestParam String email, @RequestParam String pass, @RequestParam String otp) {
