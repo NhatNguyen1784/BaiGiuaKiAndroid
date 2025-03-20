@@ -21,7 +21,7 @@ GRANT ALL PRIVILEGES ON api.* TO 'api'@'%.%.%.%';
 | 22110295 | Đặng Đăng Duy | Câu 2 |
 | 22110307 | Nguyễn Duy Đạt | Câu 3 |
 | Cả Nhóm | | Câu 4 |
-| 22110450 | Võ Văn Tuấn | Câu hỏi 5 |
-| 21110912 | Nguyễn Hữu Phong | Câu hỏi 6 |
+| 22110450 | Võ Văn Tuấn | Câu 5 |
+| 21110912 | Nguyễn Hữu Phong | Câu 6 |
 | 22110383 | Dương Khánh Nguyên | Câu 7 API Đăng ký, Đăng nhập |
 | 22110383 | Nguyễn Nhật Nguyên | Câu 7 API Full Category, Last Product |
