@@ -10,7 +10,7 @@ public class RetrofitClient {
         if(retrofit==null){
             retrofit = new Retrofit.Builder()
                     // duong dan API
-                    .baseUrl("hppt://10.0.0.2:8080/api/")
+                    .baseUrl("http://10.0.2.2:8080/api/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
