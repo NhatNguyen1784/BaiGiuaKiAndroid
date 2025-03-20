@@ -1,26 +1,102 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dp">
+    android:background="#FCE4EC">
+
+    <ImageView
+        android:id="@+id/imageBglogin"
+        android:layout_width="429dp"
+        android:layout_height="284dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/top_background2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="368dp"
+        android:breakStrategy="simple"
+        android:maxLines="3"
+        android:text="Create\nAccount"
+        android:textColor="#3b608c"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.057"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:drawableStart="@drawable/name"
+        android:hint="   Name"
+        android:inputType="textEmailAddress"
+        android:padding="12dp"
+        android:textColorHint="#888888"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.843"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/etOtp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter OTP"
-        android:inputType="number" />
+        android:layout_margin="16dp"
+        android:drawableStart="@drawable/email"
+        android:hint="   OTP"
+        android:inputType="textEmailAddress"
+        android:padding="12dp"
+        android:textColorHint="#888888"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.283" />
 
     <EditText
         android:id="@+id/etPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Password"
-        android:inputType="textPassword" />
+        android:layout_margin="16dp"
+        android:drawableStart="@drawable/password"
+        android:hint="   Password"
+        android:inputType="textPassword"
+        android:padding="12dp"
+        android:textColorHint="#888888"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.218"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etOtp" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btnVerifyOtp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Verify OTP & Register" />
-</LinearLayout>
+        android:layout_width="84dp"
+        android:layout_height="86dp"
+        android:layout_marginEnd="24dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Chuyển đến màn hình đăng kí"
+        android:scaleType="fitCenter"
+        android:src="@drawable/btn_arrow2"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="582dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

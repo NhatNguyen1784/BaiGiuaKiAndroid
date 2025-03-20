@@ -53,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(RegisterActivity.this, "OTP sent successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RegisterActivity.this, com.example.myapp.OtpVerificationActivity.class);
+                    Intent intent = new Intent(RegisterActivity.this, com.example.autobackgroundchanger.OtpVerificationActivity.class);
                     intent.putExtra("email", email);
                     startActivity(intent);
                 } else {
