@@ -11,19 +11,19 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.autobackgroundchanger.api.ApiService;
+import com.example.autobackgroundchanger.api.RetrofitClient;
+import com.example.autobackgroundchanger.model.LoginRequest;
+import com.example.autobackgroundchanger.model.LoginResponse;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import com.example.autobackgroundchanger.api.ApiService;
-import com.example.autobackgroundchanger.model.LoginRequest;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText emailEditText, passwordEditText;
     private ImageButton loginButton;
-
     private ApiService apiService;
 
     @Override
@@ -32,20 +32,13 @@ public class LoginActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.login_layout);
 
-        // Ánh xạ view
         emailEditText = findViewById(R.id.editTextTextEmailAddress);
         passwordEditText = findViewById(R.id.editTextTextPassword);
         loginButton = findViewById(R.id.imageButton);
 
-        // Khởi tạo Retrofit
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8080/api/") // IP localhost cho Android Emulator
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        // Khởi tạo ApiService từ RetrofitClient
+        apiService = RetrofitClient.getClient().create(ApiService.class);
 
-        apiService = retrofit.create(ApiService.class);
-
-        // Xử lý đăng nhập
         loginButton.setOnClickListener(view -> loginUser());
     }
 
@@ -58,28 +51,33 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Gửi request đăng nhập
         LoginRequest loginRequest = new LoginRequest(email, password);
-        Call<String> call = apiService.login(loginRequest);
+        Call<LoginResponse> call = apiService.login(loginRequest);
 
-        call.enqueue(new Callback<String>() {
+        call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful() && "Login success".equals(response.body())) {
-                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String message = response.body().getMessage();
+                    if ("Login success".equals(message)) {
+                        Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Sai tài khoản hoặc mật khẩu!", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(LoginActivity.this, "Sai tài khoản hoặc mật khẩu!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Phản hồi không hợp lệ!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Toast.makeText(LoginActivity.this, "Lỗi kết nối!", Toast.LENGTH_SHORT).show();
                 Log.e("LOGIN_ERROR", t.getMessage());
             }
         });
+
     }
 
     public void goToRegisterActivity(View view) {
