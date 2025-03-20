@@ -3,6 +3,7 @@ package com.example.autobackgroundchanger;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -14,65 +15,71 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.autobackgroundchanger.adapter.CategoryAdapter;
+import com.example.autobackgroundchanger.model.APIService;
+import com.example.autobackgroundchanger.model.Category;
+import com.example.autobackgroundchanger.model.RetrofitClient;
+
+import java.util.List;
 import java.util.Random;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainActivity extends AppCompatActivity {
-    private LinearLayout mainLayout; // Định nghĩa layout chính của activity
-    // Mảng chứa danh sách hình nền
-    private int[] backgrounds = {
-            R.drawable.bg1,
-            R.drawable.bg2,
-            R.drawable.bg3,
-            R.drawable.bg4,
-            R.drawable.bg5,
-            R.drawable.bg6
-    };
+
+    RecyclerView rvCate;
+    //Khai bao adapter
+    CategoryAdapter categoryAdapter;
+    APIService apiService;
+    List<Category> categoryList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        AnhXa();
+        GetCategory();
 
-        ConstraintLayout bg = (ConstraintLayout)
-                findViewById(R.id.main);
 
-        // Chọn ngẫu nhiên một hình nền từ mảng backgrounds
-        int randomIndex = new Random().nextInt(backgrounds.length);
+    }
 
-        // Đặt hình nền cho layout chính
-        bg.setBackgroundResource(backgrounds[randomIndex]);
+    private void AnhXa(){
+        rvCate = (RecyclerView) findViewById(R.id.rvCategories);
 
-        Switch sw = (Switch) findViewById(R.id.switch_toggle);
-        // Đổi màu nút trượt (thumb) và thanh trượt (track)
-//        sw.setThumbTintList(ColorStateList.valueOf(Color.RED)); // Nút trượt màu đỏ
-//        sw.setTrackTintList(ColorStateList.valueOf(Color.RED)); // Thanh trượt màu xám
-        // Phóng to 1.5 lần
-        sw.setScaleX(1.5f);
-        sw.setScaleY(1.5f);
+    }
 
-        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            int temp = -1; // Đặt -1 để tránh trùng với chỉ mục hợp lệ
-
+    private void GetCategory(){
+        // Goi interface trong API Service
+        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService.getCategoryAll().enqueue(new Callback<List<Category>>() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) { // Khi switch bật
-                    int randomIndex;
-                    do {
-                        randomIndex = new Random().nextInt(backgrounds.length);
-                    } while (randomIndex == temp); // Lặp đến khi chọn số khác
-
-                    temp = randomIndex; // Cập nhật temp
-                    bg.setBackgroundResource(backgrounds[randomIndex]);
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                if(response.isSuccessful()){
+                    categoryList = response.body();
+                    // Khoi tao adapter
+                    categoryAdapter = new CategoryAdapter(MainActivity.this, categoryList);
+                    rvCate.setHasFixedSize(true);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),
+                            LinearLayoutManager.HORIZONTAL, false);
+                    rvCate.setLayoutManager(layoutManager);
+                    rvCate.setAdapter(categoryAdapter);
+                    categoryAdapter.notifyDataSetChanged();
+                }
+                else {
+                    int statusCode = response.code();
                 }
             }
+
+            @Override
+            public void onFailure(Call<List<Category>> call, Throwable t) {
+                Log.d("Log", t.getMessage());
+            }
         });
-
-
     }
 }
