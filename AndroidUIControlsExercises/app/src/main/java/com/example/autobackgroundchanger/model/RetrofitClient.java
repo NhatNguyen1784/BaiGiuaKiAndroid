@@ -10,7 +10,7 @@ public class RetrofitClient {
         if(retrofit==null){
             retrofit = new Retrofit.Builder()
                     // duong dan API
-                    .baseUrl("http://app.iotstar.vn:8081/appfoods/")
+                    .baseUrl("hppt://10.0.0.2:8080/api/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
