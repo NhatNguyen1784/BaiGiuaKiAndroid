@@ -13,7 +13,16 @@ GRANT ALL PRIVILEGES ON api.* TO 'api'@'%.%.%.%';
 - Nếu chạy API trên chính máy của bạn, đổi IP thành `localhost`.
 - Nếu chạy API trên một máy khác, đổi IP thành địa chỉ của máy đó.
 
-## 3. Thành Viên & Phân Công Công Việc
+## 3. Cấu Hình Backend
+Mở file application.yaml cấu hình như sau:
+- Đổi 2 dòng sau:
+username: ${MAIL_USERNAME}
+password: ${MAIL_PASSWORD}
+THÀNH
+username: nd2004lk13@gmail.com
+password: kzvm xlcs hcsn nedy
+
+## 4. Thành Viên & Phân Công Công Việc
 
 | MSSV | Họ và Tên | Công việc |
 |------|-----------|-----------|
