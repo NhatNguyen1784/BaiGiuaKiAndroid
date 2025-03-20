@@ -1,6 +1,6 @@
-# Hướng Dẫn Cấu Hình API
+# Hướng Dẫn Cấu Hình
 
-## 1. Cấu Hình MySQL
+## 1. Cấu Hình Database
 Mở MySQL và thực hiện các lệnh sau để tạo tài khoản, database và cấp quyền:
 
 ```sql
