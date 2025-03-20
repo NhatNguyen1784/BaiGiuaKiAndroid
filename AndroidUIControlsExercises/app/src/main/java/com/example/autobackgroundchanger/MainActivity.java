@@ -1,11 +1,14 @@
 package com.example.autobackgroundchanger;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     List<Category> categoryList;
 
     TextView info;
+    ImageView logoutLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,26 @@ public class MainActivity extends AppCompatActivity {
         AnhXa();
         GetCategory();
         Getthongtin();
+        logoutLayout = findViewById(R.id.imageView5112);
+        logout();
+    }
+    private void logout ()
+    {
+        logoutLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Xóa trạng thái đăng nhập
+                SharedPreferences sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear(); // Xóa toàn bộ dữ liệu UserData
+                editor.apply();
+
+                // Chuyển đến LoginActivity
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish(); // Đóng MainActivity để không quay lại bằng Back
+            }
+        });
     }
     private void Getthongtin() {
         info = findViewById(R.id.infoUser); // Ánh xạ TextView từ layout
