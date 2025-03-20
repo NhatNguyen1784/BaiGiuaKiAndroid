@@ -8,4 +8,5 @@ import retrofit2.http.GET;
 public interface APIService {
     @GET("category")
     Call<List<Category>> getCategoryAll();
+
 }
