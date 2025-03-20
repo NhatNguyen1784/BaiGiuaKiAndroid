@@ -11,9 +11,10 @@ public class RetrofitClient {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create()) // Thêm GsonConverterFactory
                     .build();
         }
         return retrofit;
     }
 }
+

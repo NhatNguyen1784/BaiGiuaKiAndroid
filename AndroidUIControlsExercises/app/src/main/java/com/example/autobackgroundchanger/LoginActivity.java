@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.autobackgroundchanger.api.ApiService;
 import com.example.autobackgroundchanger.api.RetrofitClient;
 import com.example.autobackgroundchanger.model.LoginRequest;
-import com.example.autobackgroundchanger.model.LoginResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,14 +51,15 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         LoginRequest loginRequest = new LoginRequest(email, password);
-        Call<LoginResponse> call = apiService.login(loginRequest);
+        Call<String> call = apiService.login(loginRequest);
 
-        call.enqueue(new Callback<LoginResponse>() {
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    String message = response.body().getMessage();
-                    if ("Login success".equals(message)) {
+                    String responseText = response.body().trim(); // Loại bỏ khoảng trắng thừa
+
+                    if ("Login success".equalsIgnoreCase(responseText)) {
                         Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
@@ -72,13 +72,14 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
                 Toast.makeText(LoginActivity.this, "Lỗi kết nối!", Toast.LENGTH_SHORT).show();
-                Log.e("LOGIN_ERROR", t.getMessage());
+                Log.e("LOGIN_ERROR", "Error: " + t.getMessage());
             }
         });
-
     }
+
+
 
     public void goToRegisterActivity(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
