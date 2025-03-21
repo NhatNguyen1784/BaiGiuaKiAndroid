@@ -23,8 +23,8 @@ Mở file `application.yaml` và cấu hình như sau:
   ```
   **THÀNH**
   ```yaml
-  username: nd2004lk13@gmail.com
-  password: kzvm xlcs hcsn nedy
+  username: email của tài khoản sẽ gửi mail
+  password: mật khẩu ứng dụng của email đó sau khi tạo
   ```
 - Đổi location của storage thành đường dẫn trên máy local mà mình muốn lưu:
   ```yaml
